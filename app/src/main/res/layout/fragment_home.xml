@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ui.home.HomeFragment">
 
@@ -12,9 +13,25 @@
             type="com.yashkasera.flickrgallery.ui.home.HomeViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
+        isRefreshing="@{viewModel.isRefreshing}"
+        onRefresh="@{()-> viewModel.refresh()}"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            onPhotoItemClick="@{viewModel.onItemClick}"
+            photoAdapter="@{viewModel.photoAdapter}"
+            stateAdapter="@{viewModel.loadingStateAdapter}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="3"
+            tools:listitem="@layout/item_photo" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 </layout>

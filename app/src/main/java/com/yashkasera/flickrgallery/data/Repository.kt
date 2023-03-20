@@ -1,23 +1,34 @@
 package com.yashkasera.flickrgallery.data
 
+import androidx.paging.ExperimentalPagingApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.yashkasera.flickrgallery.data.entity.Photo
 import com.yashkasera.flickrgallery.data.source.local.FlickrDatabase
 import com.yashkasera.flickrgallery.data.source.remote.ApiHelper
+import com.yashkasera.flickrgallery.util.NETWORK_PAGE_SIZE
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class Repository @Inject constructor(
     private val apiHelper: ApiHelper,
     private val database: FlickrDatabase
 ) {
-    suspend fun getPhotos(): Result<List<Photo>> {
-        return try {
-            val res = apiHelper.getRecentPhotos(1)
-            if (res.isSuccessful)
-                Result.success(res.body()?.photoWrapper?.photo ?: emptyList())
-            else
-                Result.failure(Exception(res.errorBody().toString()))
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
+    private val pagingSourceFactory = { database.photoDao().getAll() }
+
+    @ExperimentalPagingApi
+    fun getPhotos(): Flow<PagingData<Photo>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = NETWORK_PAGE_SIZE,
+                enablePlaceholders = true
+            ),
+            remoteMediator = PhotosRemoteMediator(
+                apiHelper,
+                database
+            ),
+            pagingSourceFactory = pagingSourceFactory,
+        ).flow
     }
 }
