@@ -4,13 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
 
-    <data>
-
-        <variable
-            name="handler"
-            type="com.yashkasera.flickrgallery.MainActivity" />
-    </data>
-
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawerLayout"
         android:layout_width="match_parent"
@@ -57,6 +50,11 @@
             android:layout_gravity="start"
             android:fitsSystemWindows="true"
             app:drawerLayoutCornerSize="@dimen/margin_medium">
+
+            <include
+                android:id="@+id/nav_layout"
+                layout="@layout/nav_layout" />
         </com.google.android.material.navigation.NavigationView>
     </androidx.drawerlayout.widget.DrawerLayout>
+
 </layout>

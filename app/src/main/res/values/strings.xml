@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">FlickrGallery</string>
-    <string name="home">Home</string>
-    <string name="search">Search</string>
     <string name="retry">Retry</string>
+    <string name="error_occurred">An error occurred!</string>
+    <string name="search">Search</string>
+    <string name="shrug">¯\\_(ツ)_/¯</string>
+    <string name="no_results">No Results Found!</string>
+    <string name="enter_search">Enter search query…</string>
+    <string name="about">About</string>
+    <string name="developed_by">Developed By</string>
+    <string name="author">Yash Kasera</string>
+    <string name="get_in_touch">Get in touch</string>
+    <string name="author_contact">https://yashkasera.me</string>
 </resources>

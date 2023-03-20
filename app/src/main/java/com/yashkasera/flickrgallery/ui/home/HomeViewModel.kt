@@ -11,11 +11,13 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
+@OptIn(ExperimentalPagingApi::class)
 @HiltViewModel
-class HomeViewModel @Inject constructor(private val repository: Repository) : BaseViewModel() {
+class HomeViewModel @Inject constructor(
+    repository: Repository
+) : BaseViewModel() {
 
-    @OptIn(ExperimentalPagingApi::class)
-    override val photosFlow: Flow<PagingData<Photo>>
-        get() = repository.getPhotos()
+    override val photosFlow: Flow<PagingData<Photo>> =
+        repository.getPhotos()
             .cachedIn(viewModelScope)
 }

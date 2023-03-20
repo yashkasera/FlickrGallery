@@ -1,5 +1,6 @@
-package com.yashkasera.flickrgallery.data
+package com.yashkasera.flickrgallery.data.source
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -9,8 +10,7 @@ import com.yashkasera.flickrgallery.data.entity.Photo
 import com.yashkasera.flickrgallery.data.entity.PhotoRemoteKey
 import com.yashkasera.flickrgallery.data.source.local.FlickrDatabase
 import com.yashkasera.flickrgallery.data.source.remote.ApiHelper
-
-const val STARTING_PAGE_INDEX = 1
+import com.yashkasera.flickrgallery.util.STARTING_PAGE_INDEX
 
 @OptIn(ExperimentalPagingApi::class)
 class PhotosRemoteMediator(
@@ -55,6 +55,7 @@ class PhotosRemoteMediator(
             }
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
         } catch (exception: Exception) {
+            Log.d("PhotosRemoteMediator.kt", "YASH => load:60 $exception")
             return MediatorResult.Error(exception)
         }
     }

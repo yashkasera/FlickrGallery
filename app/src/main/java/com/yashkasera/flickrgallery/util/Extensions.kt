@@ -23,6 +23,8 @@ fun ImageView.loadImage(url: String) {
         .load(url)
         .centerCrop()
         .transition(DrawableTransitionOptions.withCrossFade())
-        .diskCacheStrategy(DiskCacheStrategy.AUTOMATIC)
-        .placeholder(shimmerDrawable).into(this)
+        .override(200, 200)
+        .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
+        .placeholder(shimmerDrawable)
+        .into(this)
 }
