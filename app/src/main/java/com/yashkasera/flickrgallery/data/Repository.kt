@@ -1,10 +1,14 @@
 package com.yashkasera.flickrgallery.data
 
 import com.yashkasera.flickrgallery.data.entity.Photo
+import com.yashkasera.flickrgallery.data.source.local.FlickrDatabase
 import com.yashkasera.flickrgallery.data.source.remote.ApiHelper
 import javax.inject.Inject
 
-class Repository @Inject constructor(private val apiHelper: ApiHelper) {
+class Repository @Inject constructor(
+    private val apiHelper: ApiHelper,
+    private val database: FlickrDatabase
+) {
     suspend fun getPhotos(): Result<List<Photo>> {
         return try {
             val res = apiHelper.getRecentPhotos(1)

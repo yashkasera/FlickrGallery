@@ -1,13 +1,18 @@
 package com.yashkasera.flickrgallery.di
 
+import android.content.Context
+import androidx.room.Room
 import com.yashkasera.flickrgallery.BuildConfig
+import com.yashkasera.flickrgallery.data.source.local.FlickrDatabase
 import com.yashkasera.flickrgallery.data.source.remote.ApiHelper
 import com.yashkasera.flickrgallery.data.source.remote.ApiHelperImpl
 import com.yashkasera.flickrgallery.data.source.remote.ApiService
 import com.yashkasera.flickrgallery.util.ApiKeyInterceptor
+import com.yashkasera.flickrgallery.util.DATABASE_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -43,5 +48,15 @@ object AppModule {
     @Provides
     @Singleton
     fun provideApiHelper(apiHelper: ApiHelperImpl): ApiHelper = apiHelper
+
+    @Singleton
+    @Provides
+    fun provideDatabase(@ApplicationContext context: Context): FlickrDatabase {
+        return Room.databaseBuilder(
+            context.applicationContext,
+            FlickrDatabase::class.java,
+            DATABASE_NAME
+        ).build()
+    }
 
 }
